@@ -4,6 +4,7 @@ const Home = () => {
     return (
         <div>
             <h1>Este el el Home</h1>
+            
         </div>
     )
 }
