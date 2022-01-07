@@ -2,27 +2,30 @@ import React, {useState} from 'react'
 import {Stack, Container, Form, Button} from "react-bootstrap"
 
 import firebaseApp from "../credentials"
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth"
 const auth = getAuth(firebaseApp)
 
 
 const Logueo = () => {
 
+    
     const [estaRegistrandose, setEstaRegistrandose] = useState(false)
 
     const submitHandler = async (e) => {
         e.preventDefault()
         const correo = e.target.formBasicEmail.value;
         const contra = e.target.formBasicPassword.value;
-             
+     
+          
         if (estaRegistrandose) {
             // si se registra
             const usuario = await createUserWithEmailAndPassword(auth, correo, contra)
-        } else {
-            // si esta iniciando sesion
-            signInWithEmailAndPassword(auth, correo, contra)
-        }
 
+        } else {
+
+            // si esta iniciando sesion
+            signInWithEmailAndPassword(auth, correo, contra);
+        }
 
     }
 
@@ -56,6 +59,9 @@ const Logueo = () => {
                 
                 <Button variant="primary" onClick= {()=> setEstaRegistrandose(!estaRegistrandose)}>
                     {estaRegistrandose ? "Ya tienes cuenta?" : "No tienes cuenta, regsitrate"}
+                </Button>
+                <Button onClick={()=> signOut(auth)} >
+                    Salir
                 </Button>
             </Stack>
         </Container>
